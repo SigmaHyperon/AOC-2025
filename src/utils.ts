@@ -6,8 +6,8 @@ export class Input {
     constructor(input: string) {
         this.content = input;
     }
-    static load(day: number): Input {
-        const filename = `${day.toString().padStart(2, "0")}.txt`;
+    static load(day: number, test: boolean = false): Input {
+        const filename = `${day.toString().padStart(2, "0")}${test ? "-test" : ""}.txt`;
         const filepath = path.join("input", filename);
         return new Input(fs.readFileSync(filepath).toString());
     }
