@@ -1,4 +1,4 @@
-import { uniques } from "./lib/arrays.ts";
+import { uniques } from "./lib/collections.ts";
 import { Input } from "./lib/input.ts";
 import { getDivisors } from "./lib/numbers.ts";
 import { slices } from "./lib/strings.ts";

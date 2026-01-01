@@ -1,4 +1,4 @@
-import { sum } from "./lib/arrays.ts";
+import { sum } from "./lib/collections.ts";
 import { Input } from "./lib/input.ts";
 
 const banks = Input.load(3, false).asLines().parse(v => v.split("").map(k => Number(k))).asArray();

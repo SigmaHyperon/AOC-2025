@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { Matrix } from "./collections.ts";
 
 export class Input {
     content: string;
@@ -14,6 +15,10 @@ export class Input {
 
     asLines(): Lines<string> {
         return new Lines(this.content.split('\n'));
+    }
+
+    asMatrix(): Matrix<string> {
+        return new Matrix(this.content.split('\n').map(v => v.split("")));
     }
 }
 
