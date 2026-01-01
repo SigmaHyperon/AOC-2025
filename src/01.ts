@@ -45,4 +45,32 @@ function simulate(start: number, sequence: Instruction[]): number {
     return hitCounter;
 }
 
+function simulate2(start: number, sequence: Instruction[]): number {
+    let position = start;
+    const toHit = 0;
+    let hitCounter = 0;
+    for (let instruction of sequence) {
+        if(instruction.direction === "L") {
+            for(let i = 0; i < instruction.amount; i++) {
+                position--;
+                if (position === toHit) 
+                    hitCounter++;
+                if (position < 0) 
+                    position = 99;
+            }
+        } else {
+            for(let i = 0; i < instruction.amount; i++) {
+                position++;
+                if(position > 99) {
+                    position = 0;
+                    hitCounter++;
+                }
+            }
+        }
+
+    }
+    return hitCounter;
+}
+
 console.log(simulate(50, input.asArray()));
+console.log(simulate2(50, input.asArray()));
