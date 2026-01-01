@@ -12,12 +12,7 @@ export function sum(list: number[]): number {
     return sum;
 }
 
-export enum Direction {
-	Up,
-	Down,
-	Left,
-	Right
-}
+export type Direction = "up" | "down" | "left" | "right";
 
 export class Matrix<T> {
 	matrix: T[][];
@@ -47,6 +42,15 @@ export class Matrix<T> {
 	public matrixValueAt(x: number, y: number): MatrixValue<T> | null {
         const value = this.valueAt(x, y);
 		return value === null ? null : new MatrixValue(x, y, value); 
+	}
+
+	public set(x: number, y: number, value: T): void {
+		if (!this.hasValueAt(x, y))
+			throw `no value at x:${x} y:${y}`;
+		const row = this.matrix[y];
+		if(typeof row === "undefined") 
+			throw `no row ${y}`;
+		row[x] = value;
 	}
 
 	public neighbours(x: number, y: number, includeDiagonal: boolean = false): MatrixValue<T>[] {
@@ -95,17 +99,17 @@ export class Matrix<T> {
 	}
 
 	public rayCast(x: number, y: number, direction: Direction): T[] {
-		if(direction === Direction.Left) {
+		if(direction === "left") {
             const row = this.matrix[y];
             if(typeof row === "undefined") 
                 throw `no row ${y}`;
 			return row.slice(0, x).reverse();
-		} else if(direction === Direction.Right) {
+		} else if(direction === "right") {
             const row = this.matrix[y];
             if(typeof row === "undefined") 
                 throw `no row ${y}`;
 			return row.slice(x + 1);
-		} else if(direction === Direction.Up) {
+		} else if(direction === "up") {
 			const res: T[] = [];
 			for(let i = 0; i < y; i++) {
                 const value = this.valueAt(x, i);
@@ -131,8 +135,12 @@ export class Matrix<T> {
 			const row = this.matrix[r];
             if(typeof row === "undefined") 
                 throw `no row ${r}`;
-			console.log((toString ? row.map(v => toString(v)) : row).join(","));
+			console.log((toString ? row.map(v => toString(v)) : row).join(""));
 		}
+	}
+
+	public copy(): Matrix<T> {
+		return new Matrix(this.matrix);
 	}
 }
 
