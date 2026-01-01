@@ -9,11 +9,11 @@ export class Input {
     static load(day: number, test: boolean = false): Input {
         const filename = `${day.toString().padStart(2, "0")}${test ? "-test" : ""}.txt`;
         const filepath = path.join("input", filename);
-        return new Input(fs.readFileSync(filepath).toString());
+        return new Input(fs.readFileSync(filepath).toString().replace(/^\s+|\s+$/g, ''));
     }
 
     asLines(): Lines<string> {
-        return new Lines(this.content.replace(/^\s+|\s+$/g, '').split('\n'));
+        return new Lines(this.content.split('\n'));
     }
 }
 

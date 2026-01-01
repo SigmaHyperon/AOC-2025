@@ -1,4 +1,4 @@
-import { Input } from "./utils.ts";
+import { Input } from "./lib/input.ts";
 
 const day = 1;
 
