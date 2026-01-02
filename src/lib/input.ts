@@ -3,7 +3,7 @@ import path from "path";
 import { Matrix } from "./collections.ts";
 
 export class Input {
-    content: string;
+    private content: string;
     constructor(input: string) {
         this.content = input;
     }
@@ -11,6 +11,9 @@ export class Input {
         const filename = `${day.toString().padStart(2, "0")}${test ? "-test" : ""}.txt`;
         const filepath = path.join("input", filename);
         return new Input(fs.readFileSync(filepath).toString().replace(/^\s+|\s+$/g, ''));
+    }
+    asString(): string {
+        return this.content;
     }
 
     asLines(): Lines<string> {
@@ -20,10 +23,14 @@ export class Input {
     asMatrix(): Matrix<string> {
         return new Matrix(this.content.split('\n').map(v => v.split("")));
     }
+
+    asParts(): Input[] {
+        return this.content.split("\n\n").map(v => new Input(v));
+    }
 }
 
 export class Lines<T> {
-    content: T[];
+    private content: T[];
     constructor(input: T[]) {
         this.content = input;
     }

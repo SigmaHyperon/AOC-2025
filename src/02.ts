@@ -19,7 +19,7 @@ function parse(arg0: string): Range {
         end: Number(match[2])
     }
 }
-const ranges = input.content.split(",").map(v => parse(v));
+const ranges = input.asString().split(",").map(v => parse(v));
 
 function isDoubleSequence(arg0: number): boolean {
     const num = arg0.toString();
