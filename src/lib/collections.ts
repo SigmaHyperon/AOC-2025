@@ -61,6 +61,18 @@ export class Matrix<T> {
 		row[x] = value;
 	}
 
+	public neighbour(x: number, y: number, direction: Direction): MatrixValue<T> | null {
+		if(direction === "up") {
+			return this.matrixValueAt(x, y-1);
+		} else if(direction === "down") {
+			return this.matrixValueAt(x, y+1);
+		} else if(direction === "left") {
+			return this.matrixValueAt(x-1, y);
+		} else {
+			return this.matrixValueAt(x+1, y);
+		}
+	}
+
 	public neighbours(x: number, y: number, includeDiagonal: boolean = false): MatrixValue<T>[] {
 		const neighbours: (MatrixValue<T> | null)[] = [];
 		neighbours.push(this.matrixValueAt(x, y-1));
@@ -106,20 +118,20 @@ export class Matrix<T> {
 		return x === 0 || y === 0 || x === this.width - 1 || y === this.height - 1;
 	}
 
-	public rayCast(x: number, y: number, direction: Direction): T[] {
+	public rayCast(x: number, y: number, direction: Direction, includeSource: boolean = false): T[] {
 		if(direction === "left") {
             const row = this.matrix[y];
             if(typeof row === "undefined") 
                 throw `no row ${y}`;
-			return row.slice(0, x).reverse();
+			return row.slice(0, x + (includeSource ? 1 :0)).reverse();
 		} else if(direction === "right") {
             const row = this.matrix[y];
             if(typeof row === "undefined") 
                 throw `no row ${y}`;
-			return row.slice(x + 1);
+			return row.slice(x + (includeSource ? 0 :1));
 		} else if(direction === "up") {
 			const res: T[] = [];
-			for(let i = 0; i < y; i++) {
+			for(let i = 0; i < y + (includeSource ? 1 :0); i++) {
                 const value = this.valueAt(x, i);
                 if(value === null)
                     throw `no value at x:${x} y:${y}`;
@@ -128,7 +140,7 @@ export class Matrix<T> {
 			return res.reverse();
 		} else {
 			const res: T[] = [];
-			for(let i = y + 1; i < this.height; i++) {
+			for(let i = y + (includeSource ? 0 :1); i < this.height; i++) {
 				const value = this.valueAt(x, i);
                 if(value === null)
                     throw `no value at x:${x} y:${y}`;
