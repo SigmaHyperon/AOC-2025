@@ -12,6 +12,14 @@ export function sum(list: number[]): number {
     return sum;
 }
 
+export function product(list: number[]): number {
+	let product = 1;
+	for(let e of list) {
+		product *= e;
+	}
+	return product;
+}
+
 export type Direction = "up" | "down" | "left" | "right";
 
 export class Matrix<T> {
