@@ -14,6 +14,10 @@ export class Point2 {
 	isInRect(x1: number, y1: number, x2: number, y2: number): boolean {
 		return this.x >= Math.min(x1, x2) && this.x <= Math.max(x1, x2) && this.y >= Math.min(y1, y2) && this.y <= Math.max(y1, y2);
 	}
+
+	equals(other: Point2): boolean {
+		return this.x === other.x && this.y === other.y;
+	}
 }
 
 export class Point3 extends Point2 {
@@ -26,6 +30,14 @@ export class Point3 extends Point2 {
 
 	toString() {
 		return `${super.toString()},${this.z}`;
+	}
+
+	equals(other: Point3): boolean {
+		return this.x === other.x && this.y === other.y && this.z === other.z;
+	}
+
+	to(other: Point3): Vector3 {
+		return new Vector3(other.x - this.x, other.y - this.y, other.z - this.z);
 	}
 }
 
@@ -73,5 +85,9 @@ export class Vector3 {
 
 	manhattenDistance(): number {
 		return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z);
+	}
+
+	length(): number {
+		return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
 	}
 }

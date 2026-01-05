@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "graphology": "^0.26.0",
+    "graphology-components": "^1.5.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
